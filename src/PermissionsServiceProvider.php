@@ -3,7 +3,6 @@
 namespace Laralum\Permissions;
 
 use Illuminate\Support\ServiceProvider;
-use Laralum\Laralum\Menu;
 
 class PermissionsServiceProvider extends ServiceProvider
 {

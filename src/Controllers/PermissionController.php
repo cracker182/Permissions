@@ -4,7 +4,7 @@ namespace Laralum\Permissions\Controllers;
 
 use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class PermissionController extends Controller
 {
     public function index()
     {
