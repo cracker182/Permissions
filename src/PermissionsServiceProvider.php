@@ -13,7 +13,7 @@ class PermissionsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/Views', 'permissions');
+        $this->loadViewsFrom(__DIR__.'/Views', 'laralum_permissions');
 
         if (!$this->app->routesAreCached()) {
             require __DIR__.'/Routes/web.php';
