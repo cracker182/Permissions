@@ -6,5 +6,5 @@ Route::group([
         'namespace' => 'Laralum\Permissions\Controllers',
         'as' => 'laralum::'
     ], function () {
-        Route::get('/permissions', 'PermissionController@index')->name('index');
+        Route::resource('permissions', 'PermissionController');
 });

@@ -1,6 +1,10 @@
 [
     {
-        "text": "Sample Link",
-        "link": "https://erik.cat"
+        "text": "Permissions",
+        "route": "laralum::permissions.index"
+    },
+    {
+        "text": "Create permission",
+        "route": "laralum::permissions.create"
     }
 ]
