@@ -36,6 +36,11 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $this->doValidation($request);
+
+        if( Permission::where('slug', $request->input('slug'))->first() ) {
+            return redirect()->route('laralum::permissions.index')->with('error','A permission with this slug already exists.');
+        }
+
         Permission::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
@@ -65,7 +70,14 @@ class PermissionController extends Controller
     public function update(Request $request, $id)
     {
         $this->doValidation($request, $id);
-        Permission::where(['id' => $id])->update([
+
+        $permission = Permission::findOrFail($id);
+
+        if( Permission::where('slug', $request->input('slug'))->first() ) {
+            return redirect()->route('laralum::permissions.index')->with('error','A permission with this slug already exists.');
+        }
+
+        $permission->update([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'slug' => $request->input('slug'),
@@ -81,7 +93,12 @@ class PermissionController extends Controller
      */
     public function confirmDelete($id)
     {
-        return view('laralum_permissions::delete', ['permission' => Permission::findOrFail($id)]);
+        $permission = Permission::findOrFail($id);
+
+        return view('laralum::pages.confirmation', [
+            'method' => 'DELETE',
+            'action' => route('laralum::permissions.destroy', ['permission' => $permission]),
+        ]);
     }
 
     /**
@@ -92,7 +109,10 @@ class PermissionController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        Permission::destroy($id);
+        $permission = Permission::findOrFail($id);
+
+        $permission->delete();
+
         return redirect()->route('laralum::permissions.index')->with('success','Permission deleted!');
     }
 
