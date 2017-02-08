@@ -18,6 +18,8 @@ class PermissionsServiceProvider extends ServiceProvider
         if (!$this->app->routesAreCached()) {
             require __DIR__.'/Routes/web.php';
         }
+
+        $this->loadMigrationsFrom(__DIR__.'/Migrations');
     }
 
     /**

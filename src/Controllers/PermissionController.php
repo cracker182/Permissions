@@ -3,6 +3,7 @@
 namespace Laralum\Permissions\Controllers;
 use App\Http\Controllers\Controller;
 use Laralum\Permissions\Models\Permission;
+use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
@@ -13,7 +14,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('laralum_permissions::index');
+        return view('laralum_permissions::index', ['permissions' => Permission::all()]);
     }
 
     /**
@@ -35,20 +36,12 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $this->doValidation($request);
-        Permissions::create([
+        Permission::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
             'slug' => $request->input('slug'),
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('laralum::permissions.index')->with('success','Permission added!');
     }
 
     /**
@@ -59,7 +52,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        return view('laralum_permissions::edit', Permission::findOrFail($id));
+        return view('laralum_permissions::edit', ['permission' => Permission::findOrFail($id)]);
     }
 
     /**
@@ -71,10 +64,13 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->doValidation($request);
-        Permissions::where(['id' => $id])->update([
+        $this->doValidation($request, $id);
+        Permission::where(['id' => $id])->update([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
             'slug' => $request->input('slug'),
         ]);
+        return redirect()->route('laralum::permissions.index')->with('success','Permission edited!');
     }
 
     /**
@@ -85,7 +81,7 @@ class PermissionController extends Controller
      */
     public function confirmDelete($id)
     {
-        return view('laralum_permissions::delete', Permission::findOrFail($id));
+        return view('laralum_permissions::delete', ['permission' => Permission::findOrFail($id)]);
     }
 
     /**
@@ -94,9 +90,10 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        Permission::destroy($id);
+        return redirect()->route('laralum::permissions.index')->with('success','Permission deleted!');
     }
 
     /**
@@ -104,10 +101,16 @@ class PermissionController extends Controller
      *
      * @param \Illuminate\Http\Request  $request
      **/
-    private function doValidation($request)
+    private function doValidation($request, $id = false)
     {
+        $rules = 'required|alpha_num|max:255';
+        if (!$id || !(Permission::findOrFail($id)->slug == $request->input('slug'))) {
+            $rules = $rules.'|unique:laralum_permissions';
+        }
         $this->validate($request, [
-            'slug' => 'required|unique:laralum_permissions|max_255',
+            'name' => 'required|max:255',
+            'slug' => $rules,
+            'description' => 'required|max:500',
         ]);
     }
 }
