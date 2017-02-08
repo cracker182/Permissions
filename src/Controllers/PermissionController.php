@@ -2,6 +2,7 @@
 
 namespace Laralum\Permissions\Controllers;
 use App\Http\Controllers\Controller;
+use Laralum\Permissions\Models\Permission;
 
 class PermissionController extends Controller
 {
@@ -33,7 +34,10 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->doValidation($request);
+        Permissions::create([
+            'slug' => $request->input('slug'),
+        ]);
     }
 
     /**
@@ -55,7 +59,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('laralum_permissions::edit', Permission::findOrFail($id));
     }
 
     /**
@@ -67,7 +71,21 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->doValidation($request);
+        Permissions::where(['id' => $id])->update([
+            'slug' => $request->input('slug'),
+        ]);
+    }
+
+    /**
+     * Displays a view to confirm delete.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmDelete($id)
+    {
+        return view('laralum_permissions::delete', Permission::findOrFail($id));
     }
 
     /**
@@ -79,5 +97,17 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Validate form of resource
+     *
+     * @param \Illuminate\Http\Request  $request
+     **/
+    private function doValidation($request)
+    {
+        $this->validate($request, [
+            'slug' => 'required|unique:laralum_permissions|max_255',
+        ]);
     }
 }

@@ -7,4 +7,5 @@ Route::group([
         'as' => 'laralum::'
     ], function () {
         Route::resource('permissions', 'PermissionController');
+        Route::get('permissions/delete/{id}', 'PermissionController@confirmDelete');
 });
