@@ -9,5 +9,5 @@ Route::group([
         // First the suplementor, then the resource
         // https://laravel.com/docs/5.4/controllers#resource-controllers
         Route::get('permissions/{permission}/delete', 'PermissionController@confirmDelete')->name('permissions.destroy.confirm');
-        Route::resource('permissions', 'PermissionController');
+        Route::resource('permissions', 'PermissionController', ['except' => ['show']]);
 });
