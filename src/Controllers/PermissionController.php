@@ -37,10 +37,6 @@ class PermissionController extends Controller
     {
         $this->doValidation($request);
 
-        if( Permission::where('slug', $request->input('slug'))->first() ) {
-            return redirect()->route('laralum::permissions.index')->with('error','A permission with this slug already exists.');
-        }
-
         Permission::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
@@ -72,10 +68,6 @@ class PermissionController extends Controller
         $this->doValidation($request, $id);
 
         $permission = Permission::findOrFail($id);
-
-        if( Permission::where('slug', $request->input('slug'))->first() ) {
-            return redirect()->route('laralum::permissions.index')->with('error','A permission with this slug already exists.');
-        }
 
         $permission->update([
             'name' => $request->input('name'),

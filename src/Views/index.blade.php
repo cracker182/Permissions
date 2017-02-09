@@ -1,7 +1,7 @@
 @extends('laralum::layouts.master')
 @section('icon', 'mdi-svg')
 @section('title', 'Permissions')
-@section('subtitle', 'Permissions module')
+@section('subtitle', 'Permissions will help you creating a complex yet simple way to manage your roles access correctly')
 @section('content')
     <div class="row">
         <div class="col col-md-12">
