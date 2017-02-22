@@ -28,7 +28,6 @@ class PermissionsChecker extends Facade
      */
     public static function check($permissions)
     {
-        [[ITEM],[ITEM],[ITEM]]
         foreach ($permissions as $permission) {
             $perm = Permission::where(['slug' => $permission['slug']])->first();
             if (!$perm) {
