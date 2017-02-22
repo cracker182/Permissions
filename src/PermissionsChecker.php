@@ -28,7 +28,8 @@ class PermissionsChecker extends Facade
      */
     public static function check($permissions)
     {
-        foreach($permissions as $permission) {
+        [[ITEM],[ITEM],[ITEM]]
+        foreach ($permissions as $permission) {
             $perm = Permission::where(['slug' => $permission['slug']])->first();
             if (!$perm) {
                 Permission::create([
@@ -38,5 +39,28 @@ class PermissionsChecker extends Facade
                 ]);
             }
         }
+
+        session(['laralum_permissions::mandatory' => array_merge(static::mandatory(), $permissions)]);
+    }
+
+    /**
+     * Returns the mandatory stored permissions so far. Not recommended.
+     *
+     * @return array
+     */
+    public static function mandatory()
+    {
+        $permission = session('laralum_permissions::mandatory');
+        return $permission ? $permission : [];
+    }
+
+    /**
+     * Returns the if the permission is stored as mandatory. Not recommended.
+     *
+     * @return bool
+     */
+    public static function isMandatory($slug)
+    {
+        return collect(static::mandatory())->contains('slug', $slug);
     }
 }
