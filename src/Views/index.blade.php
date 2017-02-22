@@ -1,66 +1,57 @@
 @extends('laralum::layouts.master')
-@section('icon', 'mdi-key-variant')
-@section('title', 'Permissions')
-@section('subtitle', 'Permissions will help you creating a complex yet simple way to manage your roles access correctly')
+@section('icon', 'ion-key')
+@section('title', __('laralum_permissions::general.permission_list'))
+@section('subtitle', __('laralum_permissions::general.permissions_desc'))
+@section('breadcrumb')
+    <ul class="uk-breadcrumb">
+        <li><a href="{{ route('laralum::index') }}">@lang('laralum_permissions::general.home')</a></li>
+        <li><span>@lang('laralum_permissions::general.permission_list')</span></li>
+    </ul>
+@endsection
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card shadow">
-                <div class="card-block">
-                    <h5>Quick Actions</h5><br />
-                    <a class="btn btn-success" href="{{ route('laralum::permissions.create') }}">Create Permission</a>
-                    <a class="btn btn-primary disabled" href="#">Permissions Settings</a>
-                    <br />
-                </div>
-            </div>
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col col-md-12">
-            <div class="card shadow">
-                <div class="card-block">
-                    @if ($permissions->count() == 0)
-                        <center>
-                            <br /><br />
-                            <h3>There are no permissions yet</h3>
-                            <h1 class="mdi mdi-emoticon-sad"></h1>
-                            <br />
-                        </center>
-                    @else
-                        <h5>Permission list</h5><br />
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
+    <div class="uk-container uk-container-large">
+        <div uk-grid class="uk-child-width-1-1">
+            <div>
+                <div class="uk-card uk-card-default">
+                    <div class="uk-card-header">
+                        @lang('laralum_permissions::general.permission_list')
+                    </div>
+                    <div class="uk-card-body">
+                        <div class="uk-overflow-auto">
+                            <table class="uk-table uk-table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th>Slug</th>
-                                        <th>Description</th>
-                                        <th>Actions</th>
+                                        <th>@lang('laralum_permissions::general.name')</th>
+                                        <th>@lang('laralum_permissions::general.slug')</th>
+                                        <th>@lang('laralum_permissions::general.actions')</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($permissions as $permission)
+                                    @forelse( $permissions as $permission )
                                         <tr>
-                                            <th>{{ $permission->id }}</th>
+                                            <td>{{ $permission->id }}</td>
                                             <td>{{ $permission->name }}</td>
                                             <td>{{ $permission->slug }}</td>
-                                            <td>{{ $permission->description }}</td>
-                                            <td>
-                                                <a href="{{ route('laralum::permissions.edit', ['id' => $permission->id]) }}" class="btn btn-primary btn-sm">
-                                                    <i class="mdi mdi-pencil"></i>
-                                                </a>
-                                                <a href="{{ route('laralum::permissions.destroy.confirm', ['id' => $permission->id]) }}" class="btn btn-danger btn-sm">
-                                                    <i class="mdi mdi-delete"></i>
-                                                </a>
+                                            <td class="uk-table-shrink">
+                                                <div class="uk-button-group">
+                                                    <a href="{{ route('laralum::permissions.edit', ['permission' => $permission->id]) }}" class="uk-button uk-button-small uk-button-default">@lang('laralum_permissions::general.edit')</a>
+                                                    <a href="{{ route('laralum::permissions.destroy.confirm', ['permission' => $permission->id]) }}" class="uk-button uk-button-small uk-button-danger">@lang('laralum_permissions::general.delete')</a>
+                                                </div>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
-                    @endif
+                    </div>
                 </div>
             </div>
         </div>
