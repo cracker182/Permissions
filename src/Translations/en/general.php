@@ -16,6 +16,7 @@ return [
     'delete'      => 'Delete',
     'permissions' => 'Permissions',
     'slug'        => 'Slug',
+    'slug_cannot_contain_spaces' => 'Slug cannot contain spaces',
     'edit'              => 'Edit',
     'edit_permission'   => 'Edit Permission',
     'create'            => 'Create',

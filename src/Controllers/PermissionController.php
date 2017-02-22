@@ -35,7 +35,14 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->doValidation($request);
+        if (str_replace(' ', '', $request->slug) != $request->slug) {
+            return redirect()->back()->withInput()->with('error', __('laralum_permissions::general.slug_cannot_contain_spaces'));
+        }
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'slug' => 'required|max:255|unique:laralum_permissions',
+            'description' => 'required|max:500',
+        ]);
 
         Permission::create([
             'name' => $request->input('name'),
@@ -65,7 +72,15 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->doValidation($request, $id);
+
+        if (str_replace(' ', '', $request->slug) != $request->slug) {
+            return redirect()->back()->withInput()->with('error', __('laralum_permissions::general.slug_cannot_contain_spaces'));
+        }
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'slug' => 'required|max:255|unique:laralum_permissions,slug,'.$id,
+            'description' => 'required|max:500',
+        ]);
 
         $permission = Permission::findOrFail($id);
 
@@ -106,23 +121,5 @@ class PermissionController extends Controller
         $permission->delete();
 
         return redirect()->route('laralum::permissions.index')->with('success','Permission deleted!');
-    }
-
-    /**
-     * Validate form of resource
-     *
-     * @param \Illuminate\Http\Request  $request
-     **/
-    private function doValidation($request, $id = false)
-    {
-        $rules = 'required|alpha_num|max:255';
-        if (!$id || !(Permission::findOrFail($id)->slug == $request->input('slug'))) {
-            $rules = $rules.'|unique:laralum_permissions';
-        }
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'slug' => $rules,
-            'description' => 'required|max:500',
-        ]);
     }
 }
