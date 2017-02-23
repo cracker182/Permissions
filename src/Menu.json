@@ -1,11 +1,11 @@
 {
     "items": [
         {
-            "text": "Permission List",
+            "trans": "laralum_permissions::general.permission_list",
             "route": "laralum::permissions.index"
         },
         {
-            "text": "Create Permission",
+            "trans": "laralum_permissions::general.create_permission",
             "route": "laralum::permissions.create"
         }
     ]

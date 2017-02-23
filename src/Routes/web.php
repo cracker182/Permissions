@@ -1,9 +1,13 @@
 <?php
 
 Route::group([
-        'middleware' => ['web', 'laralum.base', 'laralum.auth'],
+        'middleware' => [
+            'web', 'laralum.base', 'laralum.auth',
+            'can:access,Laralum\Permissions\Models\Permission',
+        ],
         'prefix' => config('laralum.settings.base_url'),
         'namespace' => 'Laralum\Permissions\Controllers',
+
         'as' => 'laralum::'
     ], function () {
         // First the suplementor, then the resource

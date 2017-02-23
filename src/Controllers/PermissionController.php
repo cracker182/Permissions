@@ -24,6 +24,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Permission::class);
+
         return view('laralum_permissions::create');
     }
 
@@ -35,6 +37,8 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Permission::class);
+
         if (str_replace(' ', '', $request->slug) != $request->slug) {
             return redirect()->back()->withInput()->with('error', __('laralum_permissions::general.slug_cannot_contain_spaces'));
         }
@@ -45,7 +49,7 @@ class PermissionController extends Controller
         ]);
 
         Permission::create($request->all());
-        return redirect()->route('laralum::permissions.index')->with('success','Permission added!');
+        return redirect()->route('laralum::permissions.index')->with('success', __('laralum_permissions::general.permission_added'));
     }
 
     /**
@@ -56,6 +60,8 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
+        $this->authorize('update', Permission::class);
+
         return view('laralum_permissions::edit', ['permission' => $permission]);
     }
 
@@ -68,6 +74,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
+        $this->authorize('update', Permission::class);
 
         if (str_replace(' ', '', $request->slug) != $request->slug) {
             return redirect()->back()->withInput()->with('error', __('laralum_permissions::general.slug_cannot_contain_spaces'));
@@ -79,7 +86,7 @@ class PermissionController extends Controller
         ]);
 
         $permission->update($request->all());
-        return redirect()->route('laralum::permissions.index')->with('success','Permission edited!');
+        return redirect()->route('laralum::permissions.index')->with('success', __('laralum_permissions::general.permission_updated', ['id' => $permission->id]));
     }
 
     /**
@@ -90,6 +97,8 @@ class PermissionController extends Controller
      */
     public function confirmDelete(Permission $permission)
     {
+        $this->authorize('delete', Permission::class);
+
         return view('laralum::pages.confirmation', [
             'method' => 'DELETE',
             'action' => route('laralum::permissions.destroy', ['permission' => $permission->id]),
@@ -105,8 +114,9 @@ class PermissionController extends Controller
      */
     public function destroy(Request $request, Permission $permission)
     {
+        $this->authorize('delete', Permission::class);
         $permission->delete();
 
-        return redirect()->route('laralum::permissions.index')->with('success','Permission deleted!');
+        return redirect()->route('laralum::permissions.index')->with('success', __('laralum_permissions::general.permission_deleted', ['id' => $permission->id]));
     }
 }
