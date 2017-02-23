@@ -56,6 +56,7 @@ class PermissionsChecker extends Facade
     /**
      * Returns the if the permission is stored as mandatory. Not recommended.
      *
+     * @param string $slug
      * @return bool
      */
     public static function isMandatory($slug)
