@@ -56,6 +56,8 @@ class PermissionsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerPolicies();
+        
         $this->loadViewsFrom(__DIR__.'/Views', 'laralum_permissions');
         $this->loadTranslationsFrom(__DIR__.'/Translations', 'laralum_permissions');
 
