@@ -12,15 +12,7 @@
 
 ## Description
 
-This module allows to grant permissions to each part of Laralum modules separately. Moreover, you can create your own permissions and use them as example below.
-
-```php
-    $user = \Laralum\Users\Models\User::findOrFail(Auth::id);
-
-    if ($user->hasPermission('example-slug')) {
-        // code
-    }
-```
+This module allows to grant permissions to each part of Laralum modules separately. Moreover you can create your own permissions to manage easily users access to your website features.
 
 ## Documentation
 
