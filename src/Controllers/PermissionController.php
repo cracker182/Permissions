@@ -1,9 +1,10 @@
 <?php
 
 namespace Laralum\Permissions\Controllers;
+
 use App\Http\Controllers\Controller;
-use Laralum\Permissions\Models\Permission;
 use Illuminate\Http\Request;
+use Laralum\Permissions\Models\Permission;
 
 class PermissionController extends Controller
 {
@@ -32,7 +33,8 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,12 +45,13 @@ class PermissionController extends Controller
             return redirect()->back()->withInput()->with('error', __('laralum_permissions::general.slug_cannot_contain_spaces'));
         }
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'slug' => 'required|max:255|unique:laralum_permissions',
+            'name'        => 'required|max:255',
+            'slug'        => 'required|max:255|unique:laralum_permissions',
             'description' => 'required|max:500',
         ]);
 
         Permission::create($request->all());
+
         return redirect()->route('laralum::permissions.index')->with('success', __('laralum_permissions::general.permission_added'));
     }
 
@@ -56,6 +59,7 @@ class PermissionController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \Laralum\Permission\Models\Permission $permission
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Permission $permission)
@@ -68,8 +72,9 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request              $request
      * @param \Laralum\Permission\Models\Permission $permission
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Permission $permission)
@@ -80,12 +85,13 @@ class PermissionController extends Controller
             return redirect()->back()->withInput()->with('error', __('laralum_permissions::general.slug_cannot_contain_spaces'));
         }
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'slug' => 'required|max:255|unique:laralum_permissions,slug,'.$permission->id,
+            'name'        => 'required|max:255',
+            'slug'        => 'required|max:255|unique:laralum_permissions,slug,'.$permission->id,
             'description' => 'required|max:500',
         ]);
 
         $permission->update($request->all());
+
         return redirect()->route('laralum::permissions.index')->with('success', __('laralum_permissions::general.permission_updated', ['id' => $permission->id]));
     }
 
@@ -93,6 +99,7 @@ class PermissionController extends Controller
      * Displays a view to confirm delete.
      *
      * @param \Laralum\Permission\Models\Permission $permission
+     *
      * @return \Illuminate\Http\Response
      */
     public function confirmDelete(Permission $permission)
@@ -108,8 +115,9 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request              $request
      * @param \Laralum\Permission\Models\Permission $permission
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Permission $permission)

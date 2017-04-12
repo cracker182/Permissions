@@ -2,8 +2,8 @@
 
 namespace Laralum\Permissions\Policies;
 
-use Laralum\Users\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Laralum\Users\Models\User;
 
 class PermissionPolicy
 {
@@ -25,7 +25,8 @@ class PermissionPolicy
     /**
      * Determine if the current user can access permissions moule.
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function access($user)
@@ -33,11 +34,11 @@ class PermissionPolicy
         return User::findOrFail($user->id)->hasPermission('laralum::permissions.access');
     }
 
-
     /**
      * Determine if the current user can create permissions.
      *
-     * @param  mixed  $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function create($user)
@@ -48,7 +49,8 @@ class PermissionPolicy
     /**
      * Determine if the current user can update permissions.
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function update($user)
@@ -59,12 +61,12 @@ class PermissionPolicy
     /**
      * Determine if the current user can delete permissions.
      *
-     * @param  mixed $user
+     * @param mixed $user
+     *
      * @return bool
      */
     public function delete($user)
     {
         return User::findOrFail($user->id)->hasPermission('laralum::permissions.delete');
     }
-
 }

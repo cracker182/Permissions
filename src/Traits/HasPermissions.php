@@ -15,11 +15,12 @@ trait HasPermissions
     }
 
     /**
-    * Returns if the user has a permission.
-    *
-    * @param mixed $permision
-    * @return bool
-    */
+     * Returns if the user has a permission.
+     *
+     * @param mixed $permision
+     *
+     * @return bool
+     */
     public function hasPermission($permission)
     {
         $permission = !is_string($permission) ?: Permission::where(['slug' => $permission])->first();

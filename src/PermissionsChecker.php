@@ -12,8 +12,8 @@
 namespace Laralum\Permissions;
 
 use Illuminate\Support\Facades\Facade;
-use Laralum\Permissions\Models\Permission;
 use Illuminate\Support\Facades\Schema;
+use Laralum\Permissions\Models\Permission;
 
 /**
  * This is the PermissionCheck facade class.
@@ -34,8 +34,8 @@ class PermissionsChecker extends Facade
                 $perm = Permission::where(['slug' => $permission['slug']])->first();
                 if (!$perm) {
                     Permission::create([
-                        'name' => $permission['name'],
-                        'slug' => $permission['slug'],
+                        'name'        => $permission['name'],
+                        'slug'        => $permission['slug'],
                         'description' => $permission['desc'],
                     ]);
                 }
@@ -53,6 +53,7 @@ class PermissionsChecker extends Facade
     public static function mandatory()
     {
         $permission = session('laralum_permissions::mandatory');
+
         return $permission ? $permission : [];
     }
 
@@ -60,6 +61,7 @@ class PermissionsChecker extends Facade
      * Returns the if the permission is stored as mandatory. Not recommended.
      *
      * @param string $slug
+     *
      * @return bool
      */
     public static function isMandatory($slug)

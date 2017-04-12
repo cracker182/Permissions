@@ -27,7 +27,6 @@ return [
     'edit_permission'   => 'Edit Permission',
     'create_permission' => 'Create Permission',
 
-
     'create_permission_desc'     => 'Create a new permission to the database',
     'slug_cannot_contain_spaces' => 'Slug cannot contain spaces',
     'permission_added'           => 'Permission added!',
