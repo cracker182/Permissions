@@ -15,7 +15,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('laralum_permissions::index', ['permissions' => Permission::all()]);
+        return view('laralum_permissions::index', ['permissions' => Permission::paginate(50)]);
     }
 
     /**

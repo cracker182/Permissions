@@ -67,6 +67,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        @include('laralum::layouts.pagination', ['paginator' => $permissions])
                     </div>
                 </div>
             </div>
