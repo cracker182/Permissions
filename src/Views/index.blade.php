@@ -35,8 +35,24 @@
                                             <td>{{ $permission->slug }}</td>
                                             <td class="uk-table-shrink">
                                                 <div class="uk-button-group">
-                                                    <a href="{{ route('laralum::permissions.edit', ['permission' => $permission->id]) }}" class="uk-button uk-button-small uk-button-default">@lang('laralum_permissions::general.edit')</a>
-                                                    <a href="{{ route('laralum::permissions.destroy.confirm', ['permission' => $permission->id]) }}" class="uk-button uk-button-small uk-button-danger">@lang('laralum_permissions::general.delete')</a>
+                                                    @can('update', $permission)
+                                                        <a href="{{ route('laralum::permissions.edit', ['permission' => $permission->id]) }}" class="uk-button uk-button-small uk-button-default">
+                                                            @lang('laralum_permissions::general.edit')
+                                                        </a>
+                                                    @else
+                                                        <button disabled class="uk-button uk-button-small uk-button-default uk-disabled">
+                                                            @lang('laralum_permissions::general.edit')
+                                                        </button>
+                                                    @endcan
+                                                    @can('delete', $permission)
+                                                        <a href="{{ route('laralum::permissions.destroy.confirm', ['permission' => $permission->id]) }}" class="uk-button uk-button-small uk-button-danger">
+                                                            @lang('laralum_permissions::general.delete')
+                                                        </a>
+                                                    @else
+                                                        <button disabled class="uk-button uk-button-small uk-button-default uk-disabled">
+                                                            @lang('laralum_permissions::general.delete')
+                                                        </button>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>
