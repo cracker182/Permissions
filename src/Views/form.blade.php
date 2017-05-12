@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                             <div class="uk-margin">
-                                <a href="{{ $cancel }}" class="uk-align-left uk-button uk-button-default">@lang('laralum_permissions::general.cancel')</a>
+                                <a href="{{ $cancel }}" class="uk-button uk-button-default">@lang('laralum_permissions::general.cancel')</a>
                                 <button type="submit" class="uk-button uk-button-primary uk-align-right">
                                     <span class="ion-forward"></span>&nbsp; {{ $button }}
                                 </button>
