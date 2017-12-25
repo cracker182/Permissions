@@ -5,9 +5,20 @@ namespace Laralum\Permissions\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Laralum\Permissions\Models\Permission;
+use Illuminate\Support\Facades\Cache;
 
 class PermissionController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        Cache::forget('laralum_permissions');
+    }
+    
     /**
      * Display a listing of the resource.
      *
