@@ -4,8 +4,8 @@ namespace Laralum\Permissions\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Laralum\Permissions\Models\Permission;
 use Illuminate\Support\Facades\Cache;
+use Laralum\Permissions\Models\Permission;
 
 class PermissionController extends Controller
 {
@@ -18,7 +18,7 @@ class PermissionController extends Controller
     {
         Cache::forget('laralum_permissions');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
