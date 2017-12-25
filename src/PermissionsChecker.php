@@ -23,15 +23,15 @@ use Laralum\Permissions\Models\Permission;
 class PermissionsChecker extends Facade
 {
     /**
-     * Return all cached permissions
+     * Return all cached permissions.
      */
     public static function allCached()
     {
-        return Cache::rememberForever('laralum_permissions', function() {
+        return Cache::rememberForever('laralum_permissions', function () {
             return Permission::all();
         });
     }
-    
+
     /**
      * Checks if the permisions exists and if they dont, they will be added.
      *
@@ -39,7 +39,6 @@ class PermissionsChecker extends Facade
      */
     public static function check($permissions)
     {
-
         foreach ($permissions as $permission) {
             if (!self::allCached()->contains('slug', $permission['slug'])) {
                 Permission::create([
@@ -50,7 +49,6 @@ class PermissionsChecker extends Facade
             }
         }
         session(['laralum_permissions::mandatory' => array_merge(static::mandatory(), $permissions)]);
-
     }
 
     /**
