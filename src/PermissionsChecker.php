@@ -30,13 +30,11 @@ class PermissionsChecker extends Facade
      */
     public static function check($permissions)
     {
-        $dbPermissions = Cache::rememberForever('laralum_permissions', function() {
-            return self::all();
-        });
-
         if (Schema::hasTable('laralum_permissions')) {
             foreach ($permissions as $permission) {
-                if (!dbPermissions->contains('slug', $permission['slug'])) {
+                if (!Cache::rememberForever('laralum_permissions', function() {
+                        return self::all();
+                })->contains('slug', $permission['slug'])) {
                     Permission::create([
                         'name'        => $permission['name'],
                         'slug'        => $permission['slug'],
