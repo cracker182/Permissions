@@ -11,10 +11,10 @@
 
 namespace Laralum\Permissions;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Schema;
 use Laralum\Permissions\Models\Permission;
-use Illuminate\Support\Facades\Cache;
 
 /**
  * This is the PermissionCheck facade class.
@@ -32,8 +32,8 @@ class PermissionsChecker extends Facade
     {
         if (Schema::hasTable('laralum_permissions')) {
             foreach ($permissions as $permission) {
-                if (!Cache::rememberForever('laralum_permissions', function() {
-                        return self::all();
+                if (!Cache::rememberForever('laralum_permissions', function () {
+                    return self::all();
                 })->contains('slug', $permission['slug'])) {
                     Permission::create([
                         'name'        => $permission['name'],
