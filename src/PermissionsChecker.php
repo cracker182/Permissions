@@ -43,11 +43,14 @@ class PermissionsChecker extends Facade
         if (Schema::hasTable('laralum_permissions')) {
             foreach ($permissions as $permission) {
                 if (!self::allCached()->contains('slug', $permission['slug'])) {
-                    Permission::create([
-                        'name'        => $permission['name'],
-                        'slug'        => $permission['slug'],
-                        'description' => $permission['desc'],
-                    ]);
+                    Cache::forget('laralum_permissions');
+                    if (!self::allCached()->contains('slug', $permission['slug'])) {
+                        Permission::create([
+                            'name'        => $permission['name'],
+                            'slug'        => $permission['slug'],
+                            'description' => $permission['desc'],
+                        ]);
+                    }
                 }
             }
         }
