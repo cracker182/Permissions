@@ -13,6 +13,7 @@ namespace Laralum\Permissions;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Schema;
 use Laralum\Permissions\Models\Permission;
 
 /**
@@ -39,13 +40,15 @@ class PermissionsChecker extends Facade
      */
     public static function check($permissions)
     {
-        foreach ($permissions as $permission) {
-            if (!self::allCached()->contains('slug', $permission['slug'])) {
-                Permission::create([
-                    'name'        => $permission['name'],
-                    'slug'        => $permission['slug'],
-                    'description' => $permission['desc'],
-                ]);
+        if (Schema::hasTable('laralum_permissions')) {
+            foreach ($permissions as $permission) {
+                if (!self::allCached()->contains('slug', $permission['slug'])) {
+                    Permission::create([
+                        'name'        => $permission['name'],
+                        'slug'        => $permission['slug'],
+                        'description' => $permission['desc'],
+                    ]);
+                }
             }
         }
         session(['laralum_permissions::mandatory' => array_merge(static::mandatory(), $permissions)]);
